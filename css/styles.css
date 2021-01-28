@@ -1,0 +1,41 @@
+* {
+    box-sizing: border-box;
+}
+
+h1 {
+    font-family: 'Oswald', sans-serif;
+}
+
+table, thead, tbody, th, tr, td {
+    border-bottom: 1px solid #eee;
+    border-collapse: collapse;
+    font-family: 'Lato', sans-serif;
+    text-align: left;
+}
+table {
+    width: 100%;
+}
+thead {
+    background-color: #000;
+    color: white;
+}
+
+th {
+    height: 30px;
+    padding: 10px;
+    border: 2px solid white;
+}
+
+td {
+    padding: 15px;
+    border-left: 2px solid #eee;
+    border-right: 2px solid #eee;
+}
+
+td:first-child {
+    border-left: none;
+}
+
+td:last-child {
+    border-right: none;
+}
