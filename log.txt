@@ -1,0 +1,12 @@
+URL: /index.html
+Timestamp: Thu Jan 28 2021 20:34:44 GMT+0100 (Central European Standard Time)
+
+URL: /css/styles.css
+Timestamp: Thu Jan 28 2021 20:34:44 GMT+0100 (Central European Standard Time)
+
+URL: /server.js
+Timestamp: Thu Jan 28 2021 20:34:44 GMT+0100 (Central European Standard Time)
+
+URL: /favicon.ico
+Timestamp: Thu Jan 28 2021 20:34:44 GMT+0100 (Central European Standard Time)
+
