@@ -10,3 +10,24 @@ Timestamp: Thu Jan 28 2021 20:34:44 GMT+0100 (Central European Standard Time)
 URL: /favicon.ico
 Timestamp: Thu Jan 28 2021 20:34:44 GMT+0100 (Central European Standard Time)
 
+URL: /
+Timestamp: Sun Jan 31 2021 09:29:57 GMT+0100 (Central European Standard Time)
+
+URL: /css/styles.css
+Timestamp: Sun Jan 31 2021 09:29:57 GMT+0100 (Central European Standard Time)
+
+URL: /favicon.ico
+Timestamp: Sun Jan 31 2021 09:29:58 GMT+0100 (Central European Standard Time)
+
+URL: /css/styles.css
+Timestamp: Sun Jan 31 2021 09:30:11 GMT+0100 (Central European Standard Time)
+
+URL: /
+Timestamp: Sun Jan 31 2021 09:36:58 GMT+0100 (Central European Standard Time)
+
+URL: /css/styles.css
+Timestamp: Sun Jan 31 2021 09:36:58 GMT+0100 (Central European Standard Time)
+
+URL: /favicon.ico
+Timestamp: Sun Jan 31 2021 09:36:59 GMT+0100 (Central European Standard Time)
+
