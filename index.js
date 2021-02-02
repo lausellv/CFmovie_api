@@ -6,7 +6,7 @@ app.use(morgan('common'));
 
 app.use(express.static('public'));
 
-//in case we get an error
+//in case we get an error middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
