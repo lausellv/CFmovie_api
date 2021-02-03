@@ -14,13 +14,12 @@ app.use((err, req, res, next) => {
 
 //get requests
 app.get('/', (req, res) => {
-  res.send('Welcome to my MyFlix!');
+  res.status(200).send('Welcome to my My Flix!');
 });
 
-app.get('/secreturl', (req, res) => {
-  res.send('This is a secret url with super top-secret content.');
+app.get('/movies', (req, res) => {
+  res.status(200).send(movies);
 });
-
 
 app.get('/documentation', (req, res) => {                  
   res.sendFile('public/documentation.html', { root: __dirname });
