@@ -1,12 +1,14 @@
-const express = require('express');
-morgan = require('morgan');
-const app = express();
-
+const express = require('express'),
+morgan = require('morgan'),
+app = express(),
+bodyParser = require('body-parser');
 app.use(morgan('common'));
 
 app.use(express.static('public'));
 
-//in case we get an error middleware
+app.use(bodyParser.json());
+
+//in case we get an error - middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
@@ -17,8 +19,15 @@ app.get('/', (req, res) => {
   res.status(200).send('Welcome to my My Flix!');
 });
 
+// Gets the list of data about ALL movies
 app.get('/movies', (req, res) => {
-  res.status(200).send(movies);
+  res.json(movies);
+});
+
+app.get('/movies/:title', (req, res) => {
+  res.json(movies.find((movie) => {
+    return movie.title === req.params.title
+  }));
 });
 
 app.get('/documentation', (req, res) => {                  
