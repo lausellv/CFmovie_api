@@ -30,18 +30,32 @@ app.get('/movies', (req, res) => {
   res.json(movies);
 });
 
+
+
 //get data about a single movie by title
-app.get('/movies/:title', (req, res) => {
-  let foundMovie = movies.find((movie) => {
-    return movie.title === req.params.title
-  })
-  res.json(foundMovie);
+app.get('/movies/:title', (req, res) =>{
+res.json(movies.find((movie)=>
+{return movie.title === req.params.title}));
 });
 
+
+//get data about a single movie by genre
+app.get('/movies/:genre', (req, res) =>{
+  res.json(movies.find((movie)=>
+  {return movie.genre === req.params.genre}));
+  });
+
+  //get data about a single movie by director
+app.get('/movies/:director', (req, res) =>{
+  res.json(movies.find((movie)=>
+  {return movie.director === req.params.director}));
+  });
+
+
+
+
 // send documentation file
-app.get('/documentation', (req, res) => {
-  res.sendFile('public/documentation.html', { root: __dirname });
-});
+app.get('/documentation.html', (req, res) => {res.sendFile('/documentation');});
 
 //Add data for a new movie to the movie list
 app.post('/movies', (req, res) => {
@@ -72,7 +86,6 @@ app.delete('/movies/:title', (req, res) => {
 });
 
 // update a user
-
 app.put('/users/:username', (req, res) => {
   // in the list of users, find this user by username
   // when you find the user, change the property to what was passed in the body
@@ -85,7 +98,7 @@ app.put('/users/:username', (req, res) => {
     if (user.username === req.params.username) {
       user.username = req.body.username;
       user.email = req.body.email;
-      return res.status(200).send({
+      return res.status(201).send({
         message: 'Sucessful PUT request updating user details',
         user: user });
     }
@@ -112,7 +125,11 @@ app.post('/users', (req, res) => {
 });
 
 
-// allow users to update their info
+//delete a user
+app.delete('/users/:username', (req, res) => {
+  res.send('Successful DELETE request - user deactivated');
+});
+
 
 
 
@@ -202,5 +219,4 @@ let addtlMovie = {
 let users = [{
   username: 'User Name',
   email: 'username@email.com'
-}];
-
+}]
