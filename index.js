@@ -4,11 +4,13 @@ const express = require('express'),
   bodyParser = require('body-parser'),
   uuid = require('uuid');
 
+const PORT = process.env.PORT || 8080;
+
 
 app.use(morgan('common'));
 
 // set static folder
-app.use(express.static(path.join(__dirname,'public')));
+app.use(express.static('public'));
 
 app.use(bodyParser.json());
 
@@ -114,9 +116,7 @@ app.post('/users', (req, res) => {
 
 
 
-app.listen(8080, () => {
-  console.log('Your app is listening on port 8080.');
-});
+app.listen(PORT, () => console.log('App is listening on port ${PORT}'));
 
 
 // object variable with top movies
