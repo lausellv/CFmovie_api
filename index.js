@@ -9,6 +9,14 @@ const PORT = process.env.PORT || 8080;
 
 app.use(morgan('common'));
 
+// create a middleware to log things to see if it works
+const logger = (req, res, next)=>{
+  console.log('It\'s working');
+  next();
+}
+//init middleware
+app.use(logger);
+
 // set static folder
 app.use(express.static('public'));
 
@@ -37,6 +45,21 @@ app.get('/movies/:title', (req, res) =>{
 res.json(movies.find((movie)=>
 {return movie.title === req.params.title}));
 });
+
+// get a movie by id 
+app.get ('/movies/:id', (req, res)=>{
+  res.json(movies.filter(movie=>movie.id === parseInt(req.params.id)));
+});
+
+
+//get data about a movie by id
+// app.get('/movies/:id', (req, res)=>{
+//   const found = movies.sum(movie =movie.id === parseInt(req.params.id))
+//   if (found){
+// res.json(movies.filter(movie => movie.id === parseInt(req.params.id)))
+//   } else
+//   res.status(400).jason( {msg: `no movie with the id of ${req.params.id} was found here `})
+// });
 
 
 //get data about a single movie by genre
