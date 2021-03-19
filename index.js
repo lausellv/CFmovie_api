@@ -1,10 +1,11 @@
 const express = require('express'),
   morgan = require('morgan'),
-  app = express(),
   bodyParser = require('body-parser'),
+  app = express(),
   uuid = require('uuid'),
   mongoose = require('mongoose'),
   Models = require('./models.js');
+
 
 const Movies = Models.Movie;
 const Users = Models.User;
