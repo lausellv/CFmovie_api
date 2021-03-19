@@ -9,6 +9,10 @@ const express = require('express'),
 const Movies = Models.Movie;
 const Users = Models.User;
 
+mongoose.connect('mongodb://localhost:27017/myFlixDB', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 app.use(morgan('common'));
 
@@ -57,16 +61,16 @@ app.get('/movies?id=1', (req, res) => {
       return movie.id == req.params.id;
     })
   );
-  res.json(movies.filter(movie=>movie.id === parseInt(req.params.id)));
+  res.json(movies.filter((movie) => movie.id === parseInt(req.params.id)));
 });
 
-
 // send documentation file
-app.get('./documentation', (req, res) => {res.sendFile('documentation.html');});
+app.get('./documentation', (req, res) => {
+  res.sendFile('documentation.html');
+});
 
 // //  Renders documentation page
 // app.use('/documentation', express.static('public'));
-
 
 //Add data for a new movie to the movie list
 app.post('/movies', (req, res) => {
@@ -154,12 +158,10 @@ app.post('/users', (req, res) => {
   }
 });
 
-
-
 //delete a user
 app.delete('/users/:username', (req, res) => {
   let user = users.find((user) => {
-  return user.username === req.params.username;
+    return user.username === req.params.username;
   });
 
   if (user) {
@@ -273,6 +275,5 @@ let users = [
   {
     username: 'Frank',
     email: 'username@yahooemail.com',
-  }
-
+  },
 ];
