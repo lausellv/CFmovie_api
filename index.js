@@ -243,18 +243,4 @@ let addtlMovie = {
 //   "Featured": false
 // }
 
-// users
-let users = [
-  {
-    username: 'Charlie',
-    email: 'username@email.com',
-  },
-  {
-    username: 'Johny',
-    email: 'username@yahooemail.com',
-  },
-  {
-    username: 'Frank',
-    email: 'username@yahooemail.com',
-  },
-];
+
