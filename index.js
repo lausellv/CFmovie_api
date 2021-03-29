@@ -8,6 +8,8 @@ const express = require('express'),
 
 const Movies = Models.Movie;
 const Users = Models.User;
+const Genres = Models.Genre;
+const Directors = Models.Director;
 
 mongoose.connect('mongodb://localhost:27017/myFlixDB', {
   useNewUrlParser: true,
@@ -43,7 +45,7 @@ app.get('/', (req, res) => {
 // Gets the list of data about ALL movies
 app.get('/movies', (req, res) => {
   Movies.find()
-  .then((movies) => {
+  .then(movies => {
     res.status(200).json(movies);
   })
   .catch((err) => {
@@ -146,7 +148,7 @@ app.put('/users/:username', (req, res) => {
 //GET a list of all users
 app.get('/users', (req, res) => {
   Users.find()
-    .then((users) => {
+    .then(users => {
       res.status(200).json(users);
     })
     .catch((err) => {
