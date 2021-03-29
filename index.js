@@ -1,5 +1,5 @@
 const express = require('express'),
-  morgan = require('morgan'),
+  morgan = require ('morgan'),
   uuid = require('uuid'),
   mongoose = require('mongoose'),
   Models = require('./models.js'),
@@ -8,8 +8,6 @@ const express = require('express'),
 
 const Movies = Models.Movie;
 const Users = Models.User;
-const Genres = Models.Genre;
-const Directors = Models.Director;
 
 mongoose.connect('mongodb://localhost:27017/myFlixDB', {
   useNewUrlParser: true,
@@ -88,17 +86,6 @@ app.delete('/movies/:title', (req, res) => {
   });
 });
 
-//GET movies by director (using his name in the query)
-// app.get('/movies/directors/:director', (req, res) => {
-//   Movies.find({ 'Director.Name': req.params.director })
-//   .then((movies) => {
-//     res.json(movies);
-//   })
-//   .catch((err) => {
-//     console.error(err);
-//     res.status(500).send('Error: ' + err);
-//   });
-// });
 
 //GET data about a director by their name (using his name in the query)
 app.get('/movies/directors/:name', (req, res) => {
@@ -125,21 +112,21 @@ app.get('/movies/genres/:genre', (req, res) => {
 });
 
 // update a user
-app.put('/users/:username', (req, res) => {
+app.put('/users/:Username', (req, res) => {
   // in the list of users, find this user by username
   // when you find the user, change the property to what was passed in the body
-  let user = users.find((user) => user.username === req.params.username);
-  if (!user) {
+  Users.findOne(user => user.Username === req.params.Username);
+  if (!User) {
     return res.status(404).send('Not found');
   }
 
-  return users.map((user) => {
-    if (user.username === req.params.username) {
-      user.username = req.body.username;
-      user.email = req.body.email;
+  return Users.map((User) => {
+    if (User.Username === req.params.Username) {
+      User.Username = req.body.Username;
+      User.email = req.body.email;
       return res.status(201).send({
         message: 'Sucessful PUT request updating user details',
-        user: user,
+        User: User,
       });
     }
   });
@@ -172,14 +159,14 @@ app.get('/users/:Username', (req, res) => {
 //ADD a new user
 app.post('/users', (req, res) => {
   Users.findOne({ Username: req.body.Username })
-    .then((user) => {
+    .then(user => {
       if (user) {
         return res.status(400).send(req.body.Username + 'already exists');
       } else {
         Users.create({
           Username: req.body.Username,
           Password: req.body.Password,
-          Email: req.body.Email,
+          email: req.body.email,
           Birthday: req.body.Birthday,
         })
           .then((user) => {
@@ -197,19 +184,20 @@ app.post('/users', (req, res) => {
     });
 });
 
-//delete a user
-app.delete('/users/:username', (req, res) => {
-  let user = users.find((user) => {
-    return user.username === req.params.username;
+//DELETE a user
+app.delete('/users/:Username', (req, res) => {
+  Users.findOneAndRemove({ Username: req.params.Username })
+  .then((user) => {
+    if (!user) {
+      res.status(400).send(req.params.Username + ' was not found');
+    } else {
+      res.status(200).send(req.params.Username + ' was deleted.');
+    }
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send('Error: ' + err);
   });
-
-  if (user) {
-    users = users.filter((obj) => {
-      return obj.username !== req.params.username;
-    });
-    res.status(201).send(`${req.params.username} was deleted.`);
-  }
-  res.send('Successful DELETE request - user deactivated');
 });
 
 app.listen(5000, () => console.log(`App is listening on port 5000`));
