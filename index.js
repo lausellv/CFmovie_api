@@ -123,7 +123,7 @@ app.put('/users/:Username', (req, res) => {
   return Users.map((User) => {
     if (User.Username === req.params.Username) {
       User.Username = req.body.Username;
-      User.email = req.body.email;
+      User.Email = req.body.Email;
       return res.status(201).send({
         message: 'Sucessful PUT request updating user details',
         User: User,
@@ -146,9 +146,11 @@ app.get('/users', (req, res) => {
 
 // get a user by username using Mongoose
 app.get('/users/:Username', (req, res) => {
+  console.log(req.params.Username )
   Users.findOne({ Username: req.params.Username })
     .then((user) => {
-      res.json(user);
+    
+     res.json(user);
     })
     .catch((err) => {
       console.error(err);
@@ -166,7 +168,7 @@ app.post('/users', (req, res) => {
         Users.create({
           Username: req.body.Username,
           Password: req.body.Password,
-          email: req.body.email,
+          Email: req.body.Email,
           Birthday: req.body.Birthday,
         })
           .then((user) => {
@@ -203,34 +205,41 @@ app.delete('/users/:Username', (req, res) => {
 app.listen(5000, () => console.log(`App is listening on port 5000`));
 
 
+// add (using post ) a favorite movie to user
+app.post('/users/:Username/movies/:MovieID', (req, res) => {
+  Users.findOneAndUpdate({Username: req.params.Username}, {
+    $push: {FavoriteMovies: req.params.MovieID},
+  },
+  {new: true}, // This line makes sure that the updated document is returned
+  (err, updatedUser) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    } else {
+      res.json(updatedUser);
+    }
+  });
+});
+
+// DELETE  a fav movie from a user's list of favorites
+app.delete('/users/:Username/Movies/:MovieID', (req, res) => {
+  Users.findOneAndUpdate({ Username: req.params.Username }, {
+     $pull: { FavoriteMovies: req.params.MovieID }
+   },
+   { new: true }, // This line makes sure that the updated document is returned
+  (err, updatedUser) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    } else {
+      res.json(updatedUser);
+    }
+  });
+});
 
 
-//object used to test the POST request on Postman
-let addtlMovie = {
-  
-  "title": "The Notebook",
-  "description": "A poor yet passionate young man falls in love with a rich young woman, giving her a sense of freedom, but they are soon separated because of their social differences.",
-  "genre": "Drama",
-  "director": "Nick Cassavetes",
-  "year": 2004
 
-};
 
-// {
-//   "Genre": {
-//       "Name": "Drama",
-//       "Description": "Nick Cassavetes was born in New York City, the son of actress Gena Rowlands and Greek-American actor and film director John Cassavetes."
-//   },
-//   "Director": {
-//       "Name": "Nick Cassavetes",
-//       "Bio": "",
-//       "Birth": 1959
-//   },
-//   "Actors": [],
-//   "Title": "The Notebook",
-//   "Description": "A poor yet passionate young man falls in love with a rich young woman, giving her a sense of freedom, but they are soon separated because of their social differences.",
-//   "ImageURL": "https://m.media-amazon.com/images/M/MV5BNDUwMDUyMDAyNF5BMl5BanBnXkFtZTYwMDQ3NzM3._V1_UX182_CR0,0,182,268_AL_.jpg",
-//   "Featured": false
-// }
+
 
 
