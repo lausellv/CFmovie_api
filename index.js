@@ -4,22 +4,42 @@ const express = require('express'),
   mongoose = require('mongoose'),
   Models = require('./models.js'),
   bodyParser = require('body-parser'),
-  passport = require('passport');
+  passport = require('passport'),
+  cors = require('cors'),
+ app = express();
+ //imports Movie and User modules from mongodb collections
+const Movies = Models.Movie;
+const Users = Models.User;
  require('./passport');
 
   //imports express-validator module for server-side validation
   const {check, validationResult, body} = require('express-validator');
+  
+  let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
 
-  const app = express();
-  //app.use(bodyParser.json());
+
+  //middleware
+ 
   app.use(bodyParser.urlencoded());
   app.use(bodyParser.json());
+
+  app.use(cors({
+    origin: (origin, callback)=>{
+      if(!origin)return callback(null, true);
+      if(allowedOrigins.indexOf(origin)===-1){
+        let message ="The CORS policy for this application doesn't allow access from origin "+ origin;
+        return callback(new Error(message), false);
+      }
+      return callback(null, true);
+    }
+  })
+  );
+
+
   // importing auth.js file
 let auth = require('./auth')(app); // must be after the bodyParser function
 
-//imports Movie and User modules from mongodb collections
-const Movies = Models.Movie;
-const Users = Models.User;
+
 
 mongoose.connect('mongodb://localhost:27017/myFlixDB', {
   useNewUrlParser: true,
@@ -30,7 +50,8 @@ mongoose.connect('mongodb://localhost:27017/myFlixDB', {
 
 
 
-// set static folder
+// middleware - 
+//set static folder
 app.use(express.static('public'));
 
 app.use(morgan('common'));
@@ -42,9 +63,6 @@ const logger = (req, res, next) => {
 };
 //init middleware
 app.use(logger);
-
-
-
 
 
 //in case we get an error - middleware
@@ -183,15 +201,34 @@ app.get('/users/:Username',passport.authenticate('jwt', { session: false }), (re
 });
 
 //ADD a new user
-app.post('/users',passport.authenticate('jwt', { session: false }) , (req, res) => {
-  Users.findOne({ Username: req.body.Username })
+app.post('/users',  // Validation logic here for request
+//you can either use a chain of methods like .not().isEmpty()
+//which means "opposite of isEmpty" in plain english "is not empty"
+//or use .isLength({min: 5}) which means
+//minimum value of 5 characters are only allowed
+[
+  check('Username', 'Username is required').isLength({min: 5}),
+  check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+  check('Password', 'Password is required').not().isEmpty(),
+  check('Email', 'Email does not appear to be valid').isEmail()
+], (req, res) => {
+
+// check the validation object for errors
+  let errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(422).json({ errors: errors.array() });
+  }
+
+  let hashedPassword = Users.hashPassword(req.body.Password);
+  Users.findOne({ Username: req.body.Username })  //search for existence of such Username
     .then(user => {
       if (user) {
-        return res.status(400).send(req.body.Username + 'already exists');
+        return res.status(400).send(req.body.Username + 'already exists');  //send response user already exists 
       } else {
         Users.create({
           Username: req.body.Username,
-          Password: req.body.Password,
+          Password: hashedPassword,
           Email: req.body.Email,
           Birthday: req.body.Birthday,
         })
@@ -227,7 +264,7 @@ app.delete('/users/:Username',  passport.authenticate('jwt', { session: false })
   });
 });
 
-app.listen(5000, () => console.log(`App is listening on port 5000`));
+
 
 
 // add (using post ) a favorite movie to user
@@ -262,6 +299,13 @@ app.delete('/users/:Username/Movies/:MovieID',passport.authenticate('jwt', { ses
   });
 });
 
+
+
+//listen for requests
+const port = process.env.PORT || 8080;
+app.listen(port, '0.0.0.0',() => {
+ console.log('Listening on Port ' + port);
+})
 
 
 
