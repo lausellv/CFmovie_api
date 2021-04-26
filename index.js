@@ -40,8 +40,7 @@ const Users = Models.User;
 let auth = require('./auth')(app); // must be after the bodyParser function
 
 
-
-mongoose.connect('mongodb://localhost:27017/myFlixDB', {
+mongoose.connect(process.env.CONNECTION_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -222,7 +221,7 @@ app.post('/users',  // Validation logic here for request
 
   let hashedPassword = Users.hashPassword(req.body.Password);
   Users.findOne({ Username: req.body.Username })  //search for existence of such Username
-    .then(user => {
+    .then((user) => {
       if (user) {
         return res.status(400).send(req.body.Username + 'already exists');  //send response user already exists 
       } else {
@@ -233,7 +232,7 @@ app.post('/users',  // Validation logic here for request
           Birthday: req.body.Birthday,
         })
           .then((user) => {
-            res.status(201).json(user);
+            res.status(201).json(user)
           })
           .catch((error) => {
             console.error(error);
