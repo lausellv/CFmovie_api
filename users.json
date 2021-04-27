@@ -1,4 +1,7 @@
 {"_id":{"$oid":"604e4af2833d7f4dea6527c9"},"Username":"userName2","Password":"unamepass2","email":"username2@email.com","Birthday":{"$date":"1986-02-19T00:00:00Z"}}
 {"_id":{"$oid":"604e4b2a833d7f4dea6527ca"},"Username":"userName3","Password":"unamepass3","email":"username3@email.com","Birthday":{"$date":"1987-02-19T00:00:00Z"}}
 {"_id":{"$oid":"604e4baa833d7f4dea6527cb"},"Username":"userName4","Password":"unamepass4","email":"username4@email.com","Birthday":{"$date":"1988-02-19T00:00:00Z"},"FavoriteMovies":[{"$oid":"604e45677f0dfaa85acf0e9a"},{"$oid":"604df820ec2bb0d160abecc6"},{"$oid":"604df7bbec2bb0d160abecc5"}]}
-{"_id":{"$oid":"604e4bb2833d7f4dea6527cc"},"Username":"userName5","Password":"unamepass5","email":"username5@email.com","Birthday":{"$date":"1988-02-19T00:00:00Z"},"FavoriteMovies":[{"$oid":"604e46477f0dfaa85acf0e9b"},{"$oid":"604e45677f0dfaa85acf0e9a"}]}
+{"_id":{"$oid":"60636d5af0bf255444d58e25"},"FavoriteMovies":[],"Username":"Victor","Password":"unamepass5","Email":"username5@email.com","Birthday":{"$date":"1980-12-22T23:00:00Z"},"__v":0}
+{"_id":{"$oid":"607aaa33dbdb224de8a09909"},"FavoriteMovies":[],"Username":"Alexander","Password":"thegreat","Email":"alexander@email.com","Birthday":{"$date":{"$numberLong":"-34366203916000"}},"__v":0}
+{"_id":{"$oid":"607aaea2dbdb224de8a0990a"},"FavoriteMovies":[],"Username":"Catherine","Password":"thegreat","Email":"catherine@email.com","Birthday":{"$date":{"$numberLong":"-5333903116000"}},"__v":0}
+{"_id":{"$oid":"607ab72adbdb224de8a0990b"},"FavoriteMovies":[],"Username":"Ivan","Password":"theterrible","Email":"ivan@email.com","Birthday":{"$date":{"$numberLong":"-5333903116000"}},"__v":0}
