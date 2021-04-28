@@ -223,7 +223,7 @@ app.post('/users',  // Validation logic here for request
   Users.findOne({ Username: req.body.Username })  //search for existence of such Username
     .then((user) => {
       if (user) {
-        return res.status(400).send(req.body.Username + 'already exists');  //send response user already exists 
+        return res.status(400).send(req.body.Username + ' already exists');  //send response user already exists 
       } else {
         Users.create({
           Username: req.body.Username,

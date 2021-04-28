@@ -1,2 +1,3 @@
 # dependencies   any line that starts with a # is a comment
 node_modules/
+.env
