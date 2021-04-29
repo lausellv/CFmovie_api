@@ -151,24 +151,34 @@ app.get('/movies/genres/:genre', passport.authenticate('jwt', { session: false }
 });
 
 // update a user
-app.put('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
-  /*authentication needed before completing request*/
-  // in the list of users, find this user by username
-  // when you find the user, change the property to what was passed in the body
-  Users.findOne(user => user.Username === req.params.Username);
-  if (!User) {
-    return res.status(404).send('Not found');
+app.put('/users/:Username', passport.authenticate('jwt', { session: false }), [
+  check('Username', 'Username is required').isLength({min:5}),
+  check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+  check('Password', 'Password is required').not().isEmpty(),
+  check('Email', 'Email does not appear to be valid').isEmail()
+  ],(req, res) => {
+  let errors = validationResult(req);
+  if(!errors.isEmpty()){
+    return res.status(422.json({errors: errors.array()});
   }
 
-  return Users.map((User) => {
-    if (User.Username === req.params.Username) {
-      User.Username = req.body.Username;
-      User.Email = req.body.Email;
-      return res.status(201).send({
-        message: 'Sucessful PUT request updating user details',
-        User: User,
-      });
-    }
+let hashedPassword = Users.hashPassword(req.body.Password);
+  Users.findOneAndUpdate({ Username: req.params.Username},
+{ $set: {
+  Username: req.body.Username,
+  Password: hashedPassword,
+  Email: req.body.Email,
+  Birthday: req.body.Birthday
+  }
+},
+{ new : true},
+(err, updatedUser) => {
+  if(err) {
+    console.error(err);
+    res.status(500).send('Error: ' + err);
+  } else {
+    res.json(updatedUser);
+    };
   });
 });
 
@@ -246,7 +256,7 @@ app.post('/users',  // Validation logic here for request
     });
 });
 
-//DELETE a user
+//DELETE a user by username
 app.delete('/users/:Username',  passport.authenticate('jwt', { session: false }) , (req, res) => {
  /*authentication needed before completing request*/
   Users.findOneAndRemove({ Username: req.params.Username })
