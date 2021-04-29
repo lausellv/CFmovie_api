@@ -182,6 +182,7 @@ let hashedPassword = Users.hashPassword(req.body.Password);
   });
 });
 
+
 //GET a list of all users
 app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.find()
