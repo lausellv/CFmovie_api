@@ -313,6 +313,9 @@ app.delete('/users/:Username/Movies/:MovieID',passport.authenticate('jwt', { ses
 
 //listen for requests
 const port = process.env.PORT || 8080;
+if (port == null || port == ""){
+  port= 8080
+}
 app.listen(port, '0.0.0.0',() => {
  console.log('Listening on Port ' + port);
 })
