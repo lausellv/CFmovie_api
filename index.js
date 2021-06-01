@@ -76,7 +76,7 @@ app.get('/', (req, res) => {
 });
 
 // Gets the list of data about ALL movies
-app.get('/movies',passport.authenticate('jwt', {session: false}), (req, res) => {
+app.get('/movies',/*passport.authenticate('jwt', {session: false}),*/ (req, res) => {
   Movies.find()
   .then(movies => {
     res.status(201).json(movies);
@@ -88,7 +88,7 @@ app.get('/movies',passport.authenticate('jwt', {session: false}), (req, res) => 
 });
 
 //get data about a single movie by title
-app.get('/movies/:title',passport.authenticate('jwt', {session: false}) 
+app.get('/movies/:title'/,passport.authenticate('jwt', {session: false}) 
 /*authentication needed before completing request*/, (req, res) => {
   Movies.findOne({ Title: req.params.title })
   .then((movie) => {
