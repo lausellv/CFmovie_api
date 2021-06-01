@@ -15,7 +15,7 @@ const Users = Models.User;
   //imports express-validator module for server-side validation
   const {check, validationResult, body} = require('express-validator');
   
-  let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+  let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'http://localhost:1234'];
 
 
   //middleware
