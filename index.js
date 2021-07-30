@@ -43,6 +43,7 @@ let auth = require('./auth')(app); // must be after the bodyParser function
 mongoose.connect(process.env.CONNECTION_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useFindAndModify: true
 });
 
 
