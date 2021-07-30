@@ -38,14 +38,11 @@ app.use(
 
 // importing auth.js file
 let auth = require("./auth")(app); // must be after the bodyParser function
-mongoose.connect(process.env.CONNECTION_URI
-  ,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: true
-  }
-);
+mongoose.connect(process.env.CONNECTION_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: true
+});
 
 // middleware -
 //set static folder
@@ -332,7 +329,7 @@ app.delete(
     console.log(req.params.MovieID);
     Users.findOneAndUpdate(
       { Username: req.params.Username },
-      { $pull: { FavoriteMovies: '604e43e17f0dfaa85acf0e99' } }
+      { $pull: { FavoriteMovies: req.params.MovieID } }
     )
       .exec()
       .then(updatedUser => {
