@@ -15,7 +15,7 @@ require("./passport");
 //imports express-validator module for server-side validation
 const { check, validationResult, body } = require("express-validator");
 
-let allowedOrigins = ["http://localhost:8080", "http://testsite.com", "http://localhost:1234", "https://cf-myflix.netlify.app"];
+let allowedOrigins = ["http://localhost:8080", "http://testsite.com", "http://localhost:1234","http://localhost:1234", "https://cf-my-movie-app.herokuapp", "https://cf-myflix.netlify.app"];
 
 //middleware
 
