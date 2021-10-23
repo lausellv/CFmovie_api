@@ -4,7 +4,10 @@ const jwt = require('jsonwebtoken'),
   passport = require('passport');
 
 require('./passport'); // local passport file
-
+/**
+ * creates a JWT token to verify the user is the same
+ * @function generateJWTToken
+ */
 let generateJWTToken = (user) => {
   return jwt.sign(user, jwtSecret, {
     subject: user.Username, // This is the username you’re encoding in the JWT

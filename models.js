@@ -1,8 +1,13 @@
 const mongoose = require('mongoose'),
 bcrypt = require('bcrypt');
 
+/**
+ * defines the structure of the movie document and its default values,
+ * validators and what is and isn't required.
+ * @constant
+ * @type {function}
+ */
 
-// defining the schema for both collections
 let movieSchema = mongoose.Schema({
   Title : {type: String, required: true},
   Genre: {
@@ -18,7 +23,12 @@ let movieSchema = mongoose.Schema({
   Featured : Boolean,
   ReleaseYear: Date,
 });
-
+/**
+ * defines the structure of the user document and its default values, 
+ * validators and what is and isn't required.
+ * @constant
+ * @type {function}
+ */
 let userSchema = mongoose.Schema({
   Username : {type: String, required: true},
   Password: {type: String, required: true},
@@ -26,15 +36,23 @@ let userSchema = mongoose.Schema({
   Birthday: Date,
   FavoriteMovies: [{type: mongoose.Schema.Types.ObjectId, ref : 'Movie'}]
 });
-
+/**
+ * hashes the password so that it cannot be read in the database keeping
+ * the users data secured
+ */
 userSchema.statics.hashPassword = (password) => {
   return bcrypt.hashSync(password, 10);
 };
-
+/**
+ * compares the password recieved with the hashed password
+ */
 userSchema.methods.validatePassword = function(password) {
   return bcrypt.compareSync(password, this.Password);
 };
-
+/**
+ * Models provide an interface to the database for creating, querying,
+ * updating, deleting records, etc
+ */
 let Movie = mongoose.model('Movie', movieSchema);
 let User = mongoose.model('User', userSchema);
 

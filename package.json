@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index"
+    "dev": "nodemon index",
+    "doc": "jsdoc -d docs --configure jsconf.json index.js"
   },
   "repository": {
     "type": "git",

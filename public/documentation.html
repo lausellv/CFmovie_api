@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyFlix - Movie API - Documentation</title>
+    <title>Movie API Documentation</title>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;700&family=Oswald:wght@600&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <h1>MyFlix - Movie API - Documentation</h1>
+    <h1>myFlix - Movie API Documentation</h1>
     <h2>Goals</h2>
     <p>To build the server-side component of a “movies” web application.<br>
         The web application will provide users with access to information about different movies, directors, and genres.<br> Users will be able to sign up, update their personal information, and create a list of their favorite movies.</p>
@@ -110,7 +110,7 @@
             </tr>
             <tr>
                 <td>Get user by name</td>
-                <td>/users/:username</td>
+                <td>/users/:Username</td>
                 <td>GET</td>
                 <td>None</td>
                 <td>
@@ -119,7 +119,7 @@
             </tr>
             <tr>
                 <td>Delete user by name</td>
-                <td>/users/:username</td>
+                <td>/users/:Username</td>
                 <td>DELETE</td>
                 <td>None</td>
                 <td>
@@ -133,8 +133,8 @@
                 <td>
                     A JSON holding the data about one user to be added. Example:
                     {
-                        Username: String,
-                        Password: String,,
+                        Username: type: String,
+                        Password: type: String,
                         Email: type: String,
                         Birthday: Date, (not required)
                         FavoriteMovies: [], (not required)
@@ -144,14 +144,13 @@
                     A JSON holding the added user's data (including ID and no passwords). Example:
                     {
                         "data": {
-                            "FavoriteMovies": [
-                                "606ed28b3973670f5af1bd62"
-                            ],
-                            "_id": "607569b49ba782386e4c26fd",
-                            "Username": "Julio",
-                            "Email": null,
-                            "__v": 0,
-                            "Birthday": null
+                            "FavoriteMovies": [],
+                            "_id": "61742ba5c3a1f80016954551",
+                            "Username": "testing44",
+                            "Password": "$2b$10$tYAwimDoUQn9wWEv64rexeFKsBulFd5vkeC0eQUFmjCx0KGFCfM/G",
+                            "Email": "ivan@email.com",
+                            "Birthday": "1800-12-23T00:00:00.000Z",
+                            "__v": 0
                         },
                         "message": "User has been updated"
                     }
@@ -159,12 +158,12 @@
             </tr>
             <tr>
                 <td>Update user's profile information</td>
-                <td>/users/:username</td>
+                <td>/users/:Username</td>
                 <td>PUT</td>
                 <td>
                     A JSON holding the information to be changed. Example:
                     {
-                        Username: String,
+                        Username: type: String,
                         Email: type: String,
                         Birthday: Date, (not required)
                         FavoriteMovies: [], (not required)
@@ -190,7 +189,7 @@
             </tr>
             <tr>
                 <td>Add movie to user's favorites</td>
-                <td>/users/:username/favorites/:movieid</td>
+                <td>/users/:Username/movies/:MovieID</td>
                 <td>POST</td>
                 <td>None</td>
                 <td>
@@ -212,7 +211,7 @@
             </tr>
             <tr>
                 <td>Delete movie from user's favorites</td>
-                <td>/users/:username/favorites/:movieid</td>
+                <td>/users/:Username/movies/:MovieID</td>
                 <td>DELETE</td>
                 <td>None</td>
                 <td>
